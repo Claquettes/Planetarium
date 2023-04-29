@@ -16,6 +16,7 @@ let filterValue = 'brightness(100%)';
 let erase = false;
 let noCycle = true;
 let freezeTime = false;
+let isGenerating = false;
 
 let lastUndo = new Date();
 let lastEdits = []
@@ -25,8 +26,11 @@ let hoverY = 0;
 
 let sizeOfCanvas = 80;
 
-const imageFolder = "assets/tiles/";
 
+//on génère une seed entre 0 et 40
+let seed = Math.floor(Math.random() * 40);
+
+const imageFolder = "assets/tiles/";
 const categories = {
                       'g': {name: "grass", number: 59, prefix: "g", container: divGrass},
                       'w': {name: "water", number: 57, prefix: "w", container: divWater},
@@ -78,20 +82,86 @@ function clearInteriorPlanet() { //on efface l'intérieur du cercle
   }
 }
 
-function procedurallyGeneratePlanet() { //on génère l'intérieur du cercle, de manière procédurale
+function procedurallyGeneratePlanet() {
+  placeWater();
+  
+}
+
+function placeWater() {
+  const waterThreshold = 5; // the number of adjacent tiles required to change a tile to water
+  const chanceToBecomeWater = 0.6; // the chance that a tile will become water if it meets the threshold
+  const radius = 340; // the radius within which tiles can be changed
+  // loop through each tile on the canvas
   for (let i = 0; i < canvas.width; i += tileSize) {
     for (let j = 0; j < canvas.height; j += tileSize) {
-      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 340) {
-        if (Math.random() < 0.5) {
-          canvasArray[i/tileSize][j/tileSize] = "g50";
-        } else {
-          canvasArray[i/tileSize][j/tileSize] = "w9";
+      // check if the tile is within the radius
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= radius) {
+        // check if the tile is empty
+        if (canvasArray[i/tileSize][j/tileSize] == "void") {
+          let adjacentTiles = 0;
+          // loop through each adjacent tile
+          for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+              // check if the adjacent tile is within the canvas boundaries and is the same type as the current tile
+              if (i/tileSize+x >= 0 && i/tileSize+x < canvasArray.length && j/tileSize+y >= 0 && j/tileSize+y < canvasArray[0].length && canvasArray[i/tileSize+x][j/tileSize+y] == canvasArray[i/tileSize][j/tileSize]) {
+                adjacentTiles++;
+              }
+            }
+          }
+          // check if the tile meets the threshold to become water
+          if (adjacentTiles >= waterThreshold && Math.random() < chanceToBecomeWater) {
+            canvasArray[i/tileSize][j/tileSize] = "w20";
+          }
         }
       }
     }
   }
+  // loop through each tile on the canvas, and delete any water tiles that is not adjacent to 2 or more water tiles
+  for (let i = 0; i < canvas.width; i += tileSize) {
+    for (let j = 0; j < canvas.height; j += tileSize) {
+      // check if the tile is within the radius
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= radius) {
+        // check if the tile is empty
+        if (canvasArray[i/tileSize][j/tileSize].startsWith("w")) {
+          let adjacentWaterTiles = 0;
+          // loop through each adjacent tile
+          for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+              // check if the adjacent tile is within the canvas boundaries and is the same type as the current tile
+              if (i/tileSize+x >= 0 && i/tileSize+x < canvasArray.length && j/tileSize+y >= 0 && j/tileSize+y < canvasArray[0].length && canvasArray[i/tileSize+x][j/tileSize+y].startsWith("w")) {
+                adjacentWaterTiles++;
+              }
+            }
+          }
+          // check if the tile meets the threshold to become water
+          if (adjacentWaterTiles < 5) {
+            canvasArray[i/tileSize][j/tileSize] = "void";
+          }
+        }
+      }
+    }
+  }
+
+
+
 }
 
+
+function getAdjacentTiles(x, y) {
+  const adjacentTiles = [];
+  
+  for (let i = x - 1; i <= x + 1; i++) {
+    for (let j = y - 1; j <= y + 1; j++) {
+      if (i === x && j === y) continue; // ignore current tile
+      if (i < 0 || i >= canvasArray.length || j < 0 || j >= canvasArray[0].length) continue; // ignore tiles outside canvas
+      adjacentTiles.push(canvasArray[i][j]);
+    }
+  }
+  
+  return adjacentTiles;
+}
+
+  
 
 
 planetOutiline();
