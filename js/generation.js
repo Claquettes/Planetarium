@@ -108,6 +108,16 @@ function placeDirt() {
                     }
                 }
             }
+            let adjacentWaterTiles = 0;
+            // loop through each adjacent tile
+            for (let x = -1; x <= 1; x++) {
+              for (let y = -1; y <= 1; y++) {
+                // check if the adjacent tile is within the canvas boundaries and is the same type as the current tile
+                if (i/tileSize+x >= 0 && i/tileSize+x < canvasArray.length && j/tileSize+y >= 0 && j/tileSize+y < canvasArray[0].length && canvasArray[i/tileSize+x][j/tileSize+y].startsWith("w")) {
+                  adjacentWaterTiles++;
+                }
+              }
+            }
             if(adjacentMountainTiles >= 4) {
                 canvasArray[i/tileSize][j/tileSize] = "grass";
             }
@@ -123,7 +133,13 @@ function placeDirt() {
                 canvasArray[i/tileSize][j/tileSize] = "mountain";
             }
             else {
-                canvasArray[i/tileSize][j/tileSize] = "grass";
+                if (adjacentWaterTiles >= 1 && Math.random() < 0.03) {
+
+                    canvasArray[i/tileSize][j/tileSize] = "sand";
+                }
+                else {
+                    canvasArray[i/tileSize][j/tileSize] = "grass";
+                }
             }
             }
         }
