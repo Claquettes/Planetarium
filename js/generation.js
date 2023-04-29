@@ -99,12 +99,40 @@ function placeDirt() {
       for (let j = 0; j < canvas.height; j += tileSize) {
         if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= radius - 10) {
           if (canvasArray[i/tileSize][j/tileSize] == "void") {
-            canvasArray[i/tileSize][j/tileSize] = "grass";
-          }
+            //on calcule le nombre de voisins mountain
+            let adjacentMountainTiles = 0;
+            for (let x = -1; x <= 1; x++) {
+                for (let y = -1; y <= 1; y++) {
+                    if (i/tileSize+x >= 0 && i/tileSize+x < canvasArray.length && j/tileSize+y >= 0 && j/tileSize+y < canvasArray[0].length && canvasArray[i/tileSize+x][j/tileSize+y] == "mountain") {
+                    adjacentMountainTiles++;
+                    }
+                }
+            }
+            if(adjacentMountainTiles >= 4) {
+                canvasArray[i/tileSize][j/tileSize] = "grass";
+            }
+            else if(adjacentMountainTiles < 3 && adjacentMountainTiles > 1) {
+                if (Math.random() < 0.9) {
+                    canvasArray[i/tileSize][j/tileSize] = "mountain";
+                }
+                else {
+                    canvasArray[i/tileSize][j/tileSize] = "highMountain";
+                }
+            }
+            else if (Math.random() < 0.1) {
+                canvasArray[i/tileSize][j/tileSize] = "mountain";
+            }
+            else {
+                canvasArray[i/tileSize][j/tileSize] = "grass";
+            }
+            }
         }
-      }
+        }
     }
 }
+
+
+
   
   
   

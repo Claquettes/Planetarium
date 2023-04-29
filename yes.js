@@ -12,7 +12,8 @@ const grassColor = '#a6da95';
 const waterColor = '#91d7e3';
 const voidColor = '#363a4f';
 const glowColor = '#939ab7';
-
+const mountainColor = '#a5adcb';
+const highMountainColor = '#cad3f5';
 
 const tileSize = 10;
 let currentImage = 0;
@@ -32,7 +33,7 @@ let hoverY = 0;
 
 let sizeOfCanvas = 60;
 
-let categories = ["grass", "water", "glow", "void"];
+let categories = ["grass", "water", "glow", "void", "mountain"];
 
 //on génère une seed entre 0 et 40
 let seed = Math.floor(Math.random() * 40);
@@ -206,6 +207,14 @@ function draw() {
       }
       else if(imgTag == "glow"){
         ctx.fillStyle = glowColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+      }
+      else if(imgTag == "mountain"){
+        ctx.fillStyle = mountainColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+      }
+      else if(imgTag == "highMountain"){
+        ctx.fillStyle = highMountainColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
       }
     })
