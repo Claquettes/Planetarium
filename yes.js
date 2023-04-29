@@ -14,7 +14,7 @@ let hours = 0;
 let filterValue = 'brightness(100%)';
 
 let erase = false;
-let noCycle = false;
+let noCycle = true;
 let freezeTime = false;
 
 let lastUndo = new Date();
@@ -56,24 +56,32 @@ for (let i = 0; i < canvas.width; i += tileSize) {
   }
 }
 
-function drawSquare(){ //on ajoute a l'array des tiles un cercle de 40px de rayon avec la tile g10 et le reste en w6
+function planetOutiline(){ //on ajoute a l'array des tiles un cercle de 40px de rayon avec la tile g10 et le reste en void
   for (let i = 0; i < canvas.width; i += tileSize) {
     for (let j = 0; j < canvas.height; j += tileSize) {
       if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 350) {
         canvasArray[i/tileSize][j/tileSize] = "g10";
       } else {
-        canvasArray[i/tileSize][j/tileSize] = "w6";
+        canvasArray[i/tileSize][j/tileSize] = "void";
       }
     }
   }
+}
+
+function clearInteriorPlanet() { //on efface l'intérieur du cercle
+  for (let i = 0; i < canvas.width; i += tileSize) {
+    for (let j = 0; j < canvas.height; j += tileSize) {
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 340) {
+        canvasArray[i/tileSize][j/tileSize] = "void";
+      }
+    }
+  }
+}
 
 
- 
-} 
-console.dir(canvasArray);
-drawSquare();
 
-
+planetOutiline();
+clearInteriorPlanet();
 
 
 
@@ -89,7 +97,6 @@ canvas.addEventListener("click", (event) => {
     lastEdits.push({i, j, prevImg: canvasArray[i][j]})
     canvasArray[i][j] = selectedImage.tag;
   }
-  console.dir(canvasArray)
 });
 
 canvas.addEventListener("mousemove", (event) => {
@@ -246,7 +253,7 @@ fileInput.addEventListener('change', (event) => {
 
 
 //on appelle la fonction cycle tous les 1000ms  
-setInterval(cycle, 100);
+setInterval(cycle, 5000);
 
 function cycle() {
   if (!freezeTime) {
