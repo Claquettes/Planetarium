@@ -15,6 +15,7 @@ const glowColor = '#939ab7';
 const mountainColor = '#a5adcb';
 const highMountainColor = '#cad3f5';
 const sandColor = '#f7e1b2';
+const populationColor = '#ed8796';
 
 const tileSize = 10;
 let currentImage = 0;
@@ -25,6 +26,8 @@ let erase = false;
 let noCycle = true;
 let freezeTime = false;
 let isGenerating = false;
+
+let currentChoice = "null";
 
 let lastUndo = new Date();
 let lastEdits = []
@@ -59,8 +62,9 @@ function GeneratePlanet() {
 
 GeneratePlanet();
 
-
-
+function addPopulation(){
+  currentChoice = "population";
+}
 canvas.addEventListener("click", (event) => {
   let i = Math.floor(event.offsetX / tileSize);
   let j = Math.floor(event.offsetY / tileSize);
@@ -69,9 +73,9 @@ canvas.addEventListener("click", (event) => {
   if (erase) { //on ne pose pas d'image, on efface
     lastEdits.push({i, j, prevImg: canvasArray[i][j]})
     canvasArray[i][j] = "void";
-  } else if(selectedImage) {
-    lastEdits.push({i, j, prevImg: canvasArray[i][j]})
-    canvasArray[i][j] = selectedImage.tag;
+  } else if(selectedImage != "null") {
+    canvasArray[i][j] = currentChoice;
+    console.log(currentChoice);
   }
 });
 
@@ -97,20 +101,7 @@ function undo() {
   canvasArray[lastEdit.i][lastEdit.j] = lastEdit.prevImg;
 }
 
-//on met les fonctions des boutons ici
-function changeSize() {
-  let newHeight = document.getElementById("height").value;
-  let newWidth = document.getElementById("width").value;
-  canvas.width = newHeight*tileSize;
-  canvas.height = newWidth*tileSize;
-  canvasArray = new Array(canvas.width/tileSize).fill(0).map(() => new Array(canvas.height/tileSize).fill("void"));
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let i = 0; i < canvas.width; i += tileSize) {
-    for (let j = 0; j < canvas.height; j += tileSize) {
-      ctx.rect(i, j, tileSize, tileSize);
-    }
-  }
-}
+
 //we import a json file in the "gardenInput" input
 fileInput.addEventListener('change', (event) => {
   const file = event.target.files[0];
@@ -220,6 +211,10 @@ function draw() {
       }
       else if(imgTag == "sand"){
         ctx.fillStyle = sandColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+      }
+      else if(imgTag == "population"){
+        ctx.fillStyle = populationColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
       }
     })
