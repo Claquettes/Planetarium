@@ -83,7 +83,9 @@ function clearInteriorPlanet() { //on efface l'intérieur du cercle
 }
 
 function procedurallyGeneratePlanet() {
+  isGenerating = true;
   placeWater();
+  placeDirt();
   
 }
 
@@ -110,7 +112,7 @@ function placeWater() {
           }
           // check if the tile meets the threshold to become water
           if (adjacentTiles >= waterThreshold && Math.random() < chanceToBecomeWater) {
-            canvasArray[i/tileSize][j/tileSize] = "w20";
+            canvasArray[i/tileSize][j/tileSize] = "w49";
           }
         }
       }
@@ -141,10 +143,21 @@ function placeWater() {
       }
     }
   }
-
-
-
 }
+
+function placeDirt() {
+  //on pose simplement de la dirt sur les tiles void, à l'intérieur du cercle
+  for (let i = 0; i < canvas.width; i += tileSize) {
+    for (let j = 0; j < canvas.height; j += tileSize) {
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 340) {
+        if (canvasArray[i/tileSize][j/tileSize] == "void") {
+          canvasArray[i/tileSize][j/tileSize] = "g48";
+        }
+      }
+    }
+  }
+}
+
 
 
 function getAdjacentTiles(x, y) {
