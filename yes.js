@@ -8,6 +8,12 @@ const divFlowers = document.getElementById("flower");
 const sc = document.getElementsByClassName("s-container");
 const fileInput = document.getElementById('gardenInput');
 
+const grassColor = '#a6da95';
+const waterColor = '#91d7e3';
+const voidColor = '#363a4f';
+const glowColor = '#939ab7';
+
+
 const tileSize = 10;
 let currentImage = 0;
 let hours = 0;
@@ -24,14 +30,14 @@ let hover = false;
 let hoverX = 0;
 let hoverY = 0;
 
-let sizeOfCanvas = 80;
+let sizeOfCanvas = 60;
 
-let categories = ["grass", "water"];
+let categories = ["grass", "water", "glow", "void"];
 
 //on génère une seed entre 0 et 40
 let seed = Math.floor(Math.random() * 40);
 
-let canvasArray = new Array(80).fill(0).map(() => new Array(80).fill("void"));
+let canvasArray = new Array(60).fill(0).map(() => new Array(60).fill("void"));
 
 let selectedImage;
 for (let i = 0; i < canvas.width; i += tileSize) {
@@ -42,7 +48,7 @@ for (let i = 0; i < canvas.width; i += tileSize) {
 
 function GeneratePlanet() {
   isGenerating = true;
-  planetOutiline();
+  planetOutiline(); //shape and glow 
   clearInteriorPlanet();
   placeWater();
   placeDirt();
@@ -103,6 +109,38 @@ function changeSize() {
     }
   }
 }
+//we import a json file in the "gardenInput" input
+fileInput.addEventListener('change', (event) => {
+  const file = event.target.files[0];
+  
+  console.log('Selected file:', file);
+  //when we select a file, we read it, and then we draw the images on the canvas
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const json = JSON.parse(event.target.result);
+    let height = json["height"];
+    let width = json["width"];
+    canvas.width = height*tileSize;
+    canvas.height = width*tileSize;
+    canvasArray = new Array(canvas.width/tileSize).fill(0).map(() => new Array(canvas.height/tileSize).fill("void"));
+    json["tiles"].forEach((tile) => {
+      let imgTag = tile.imgTag;
+      let i = tile.i;
+      let j = tile.j;
+
+      if (imgTag == "void") {
+        canvasArray[i][j] = "void";
+      } else {
+        let category = categories[imgTag[0]];
+        console.log(category)
+        let number = parseInt(imgTag.slice(1));
+        canvasArray[i][j] = imgTag;
+      }
+    });
+  };
+  reader.readAsText(file);
+  fileInput.value = "";
+});
 
 //on appelle la fonction cycle tous les 1000ms  
 setInterval(cycle, 5000);
@@ -152,16 +190,22 @@ function draw() {
     row.forEach((tile, j) => {
       let imgTag = canvasArray[i][j];
       if (imgTag == "void") {
-        ctx.clearRect(i*tileSize, j*tileSize, tileSize, tileSize);
+        ctx.fillStyle = voidColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+        
       } 
       else if(imgTag == "grass"){
         //on prends la couleur verte
-        ctx.fillStyle = "#00ff00";
+        ctx.fillStyle = grassColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
       } 
       else if(imgTag == "water"){
         //on prends la couleur bleue
-        ctx.fillStyle = "#0000ff";
+        ctx.fillStyle = waterColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+      }
+      else if(imgTag == "glow"){
+        ctx.fillStyle = glowColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
       }
     })

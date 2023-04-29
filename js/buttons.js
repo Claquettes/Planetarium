@@ -79,35 +79,3 @@ function clearButton() {
       a.click();
   }
 
-//we import a json file in the "gardenInput" input
-fileInput.addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    
-    console.log('Selected file:', file);
-    //when we select a file, we read it, and then we draw the images on the canvas
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const json = JSON.parse(event.target.result);
-      let height = json["height"];
-      let width = json["width"];
-      canvas.width = height*tileSize;
-      canvas.height = width*tileSize;
-      canvasArray = new Array(canvas.width/tileSize).fill(0).map(() => new Array(canvas.height/tileSize).fill("void"));
-      json["tiles"].forEach((tile) => {
-        let imgTag = tile.imgTag;
-        let i = tile.i;
-        let j = tile.j;
-  
-        if (imgTag == "void") {
-          canvasArray[i][j] = "void";
-        } else {
-          let category = categories[imgTag[0]];
-          console.log(category)
-          let number = parseInt(imgTag.slice(1));
-          canvasArray[i][j] = imgTag;
-        }
-      });
-    };
-    reader.readAsText(file);
-    fileInput.value = "";
-  });

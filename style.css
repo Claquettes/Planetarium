@@ -8,6 +8,7 @@
 body{
   font-family: "Nova Oval", sans-serif;
   transition: 500ms;
+  background-color: #363a4f;
 }
 
 .left{  
@@ -21,9 +22,9 @@ body{
   padding-bottom: 0%;
   justify-content: center;
   text-align: center;
-  box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
--webkit-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
--moz-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
+  box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-webkit-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-moz-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
 }
 
 .help{
@@ -76,9 +77,9 @@ body{
   margin-left: 10px;
   border: 3px solid white;
   cursor: pointer;
-  box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
--webkit-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
--moz-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
+  box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-webkit-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-moz-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
 }
 
 #image-container {
@@ -114,9 +115,9 @@ summary{
   text-align: center;
   transition: 0.5s;
   cursor: pointer;
-  box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.5);
--webkit-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
--moz-box-shadow: 13px 20px 36px 3px rgba(144, 200, 172, 0.7);
+  box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-webkit-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
+-moz-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
 }
 
 .bg {
