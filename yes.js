@@ -78,10 +78,25 @@ function clearInteriorPlanet() { //on efface l'intérieur du cercle
   }
 }
 
+function procedurallyGeneratePlanet() { //on génère l'intérieur du cercle, de manière procédurale
+  for (let i = 0; i < canvas.width; i += tileSize) {
+    for (let j = 0; j < canvas.height; j += tileSize) {
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 340) {
+        if (Math.random() < 0.5) {
+          canvasArray[i/tileSize][j/tileSize] = "g50";
+        } else {
+          canvasArray[i/tileSize][j/tileSize] = "w9";
+        }
+      }
+    }
+  }
+}
+
 
 
 planetOutiline();
 clearInteriorPlanet();
+procedurallyGeneratePlanet();
 
 
 
