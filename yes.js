@@ -8,7 +8,7 @@ const divFlowers = document.getElementById("flower");
 const sc = document.getElementsByClassName("s-container");
 const fileInput = document.getElementById('gardenInput');
 
-const tileSize = 40;
+const tileSize = 10;
 let currentImage = 0;
 let hours = 0;
 let filterValue = 'brightness(100%)';
@@ -31,7 +31,7 @@ const categories = {
                       'c': {name: "cliffs", number: 37, prefix: "c", container: divCliff},
                       'f': {name: "flowers", number: 8, prefix: "f", container: divFlowers}
 };
-let canvasArray = new Array(10).fill(0).map(() => new Array(10).fill("void"));
+let canvasArray = new Array(40).fill(0).map(() => new Array(40).fill("void"));
 
 for (let prefix in categories) {
   let category = categories[prefix];
