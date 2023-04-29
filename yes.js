@@ -23,6 +23,8 @@ let hover = false;
 let hoverX = 0;
 let hoverY = 0;
 
+let sizeOfCanvas = 80;
+
 const imageFolder = "assets/tiles/";
 
 const categories = {
@@ -31,7 +33,7 @@ const categories = {
                       'c': {name: "cliffs", number: 37, prefix: "c", container: divCliff},
                       'f': {name: "flowers", number: 8, prefix: "f", container: divFlowers}
 };
-let canvasArray = new Array(40).fill(0).map(() => new Array(40).fill("void"));
+let canvasArray = new Array(80).fill(0).map(() => new Array(80).fill("void"));
 
 for (let prefix in categories) {
   let category = categories[prefix];
@@ -54,6 +56,27 @@ for (let i = 0; i < canvas.width; i += tileSize) {
   }
 }
 
+function drawSquare(){ //on ajoute a l'array des tiles un cercle de 40px de rayon avec la tile g10 et le reste en w6
+  for (let i = 0; i < canvas.width; i += tileSize) {
+    for (let j = 0; j < canvas.height; j += tileSize) {
+      if (Math.sqrt(Math.pow(i - canvas.width/2, 2) + Math.pow(j - canvas.height/2, 2)) <= 350) {
+        canvasArray[i/tileSize][j/tileSize] = "g10";
+      } else {
+        canvasArray[i/tileSize][j/tileSize] = "w6";
+      }
+    }
+  }
+
+
+ 
+} 
+console.dir(canvasArray);
+drawSquare();
+
+
+
+
+
 canvas.addEventListener("click", (event) => {
   let i = Math.floor(event.offsetX / tileSize);
   let j = Math.floor(event.offsetY / tileSize);
@@ -72,7 +95,6 @@ canvas.addEventListener("click", (event) => {
 canvas.addEventListener("mousemove", (event) => {
   hoverX = Math.floor(event.offsetX / tileSize);
   hoverY = Math.floor(event.offsetY / tileSize);
-
   hover = true;
 });
 
