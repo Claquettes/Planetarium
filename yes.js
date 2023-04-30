@@ -175,6 +175,9 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //we call the function qui calcule les populations
+  onTick();
+
   ctx.filter = filterValue;
   if(noCycle) {
     ctx.filter = "brightness(100%)";
@@ -229,4 +232,18 @@ function draw() {
 
   requestAnimationFrame(draw);
 }
+
+function tickCalculation() {
+  setInterval(() => {
+    setTimeout(() => {
+      onTick();
+    }, 1000);
+
+  }, 1000);
+}
+
+tickCalculation();
+
+
+
 requestAnimationFrame(draw);
