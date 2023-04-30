@@ -31,25 +31,8 @@
         <input type="file" id="gardenInput">
       </div>
     <span class="help">
-      <details>
-        <summary>Click here if you need help !</summary>
-        <p>Click on the buttons to select the tile you want to draw.</p>
-        <p>Click on the canvas to draw.</p>
-        <p>Click on the "Clear" button to clear the canvas.</p>
-        <p>Click on the "Eraser" button to erase the tiles.</p>
-      </details>
-      <details class="weatherSettings">
-        <summary>Settings about Time/weather</summary>
-        <button id="noCycle"onclick="cycleButton()">Click here to disable the Day / Night cycle</button>
-        <button id="freezeTime"onclick="freezeTimeButton()">Freeze Time</button>
-          0<input type="range" min="1" max="240" value="120" class="slider" id="hourSlide">24
-      </details>
-      <span class="sizeOfGarden">
-        Size of the garden
-        <input type="number" id="height" name="height" min="1" max="25" value="10">
-        <input type="number" id="width" name="width" min="1" max="25" value="10">
-        <button id="size" onclick="changeSize()">Changer</button>
-      </span>
+      
+      
     </span>
     </span>
     <canvas id="drawing-canvas" width="600" height="600"></canvas>

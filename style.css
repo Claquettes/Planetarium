@@ -28,8 +28,8 @@ body{
 }
 
 #addPopulation{
-  width: 4%;
-  height: 4%;
+  width: 30%;
+  height: 10%;
   background-color: white;
   font-size: x-small;
 }
@@ -89,7 +89,7 @@ body{
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-left: 10px;
+  margin-left: 40%;
   border: 3px solid white;
   cursor: pointer;
   box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);

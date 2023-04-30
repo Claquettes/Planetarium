@@ -88,54 +88,57 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
 
     //we already know that the tile is a population tile, so we only need to check the rules
     //rule 1
-    if (adjacentWater < 1) {
+    if (adjacentWater < 1 && adjacentPopulation < 3) {
         canvasArray[i][j] = "grass";
         return;
-    }
-    //rule 2
-    if (adjacentGrass == 2 || adjacentGrass == 3) {
-        if (Math.random()<0.25){
-            if (i > 0 && canvasArray[i-1][j] == "grass") {
-                canvasArray[i-1][j] = "population";
-                return;
-            }
-            else if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "grass") {
-                canvasArray[i+1][j] = "population";
-                return;
-            }
-        } else if (Math.random()<0.5){
-            if (j > 0 && canvasArray[i][j-1] == "grass") {
-                canvasArray[i][j-1] = "population";
-                return;
-            }
-            else if (j < canvasArray[i].length - 1 && canvasArray[i][j+1] == "grass") {
-                canvasArray[i][j+1] = "population";
-                return;
-            }
-        }
     }
     //rule 3
-    if (adjacentPopulation > 3) {
+    else if (adjacentPopulation > 3 && adjacentWater < 1) {
         canvasArray[i][j] = "grass";
         return;
     }
-    //rule 4
-    if (adjacentPopulation == 2 || adjacentPopulation == 3) {
-        return;
+    else {
+        addPopulationOnARandomTile(i, j);
     }
 
-
-    //rule 5
-    if (adjacentGrass == 1 && adjacentWater == 1) {
-        canvasArray[i][j] = "city";
-        return;
+    if(adjacentPopulation == 2){
+        addPopulationOnARandomTile(i, j);
     }
 
-    //if none of the rules apply, the tile stays the same
-    if (adjacentPopulation == 0)
-        canvasArray[i][j] = "population";
-    return;
-
+    
+    
 }
 
+
+function addPopulationOnARandomTile(i, j){
+    //we create an array with all the possible tiles where we can add a population tile
+    let possibleTiles = [];
+    if (i > 0 && canvasArray[i-1][j] == "grass") {
+        possibleTiles.push("up");
+    }
+    if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "grass") {
+        possibleTiles.push("down");
+    }
+    if (j > 0 && canvasArray[i][j-1] == "grass") {
+        possibleTiles.push("left");
+    }
+    if (j < canvasArray[i].length - 1 && canvasArray[i][j+1] == "grass") {
+        possibleTiles.push("right");
+    }
+    //now we choose a random tile from the array
+    let randomTile = possibleTiles[Math.floor(Math.random() * possibleTiles.length)];
+    //and we add a population tile on that tile
+    if (randomTile == "up") {
+        canvasArray[i-1][j] = "population";
+    }
+    if (randomTile == "down") {
+        canvasArray[i+1][j] = "population";
+    }
+    if (randomTile == "left") {
+        canvasArray[i][j-1] = "population";
+    }
+    if (randomTile == "right") {
+        canvasArray[i][j+1] = "population";
+    }
+}
    

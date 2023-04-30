@@ -16,7 +16,6 @@ const mountainColor = '#a5adcb';
 const highMountainColor = '#cad3f5';
 const sandColor = '#f7e1b2';
 const populationColor = '#ed8796';
-const cityColor = '#dz8796';
 
 const tileSize = 10;
 let currentImage = 0;
@@ -73,10 +72,8 @@ canvas.addEventListener("click", (event) => {
   let y = j * tileSize;
   if (erase) { //on ne pose pas d'image, on efface
     lastEdits.push({i, j, prevImg: canvasArray[i][j]})
-    canvasArray[i][j] = "void";
   } else if(selectedImage != "null") {
     canvasArray[i][j] = currentChoice;
-    console.log(currentChoice);
   }
 });
 
@@ -220,11 +217,7 @@ function draw() {
       else if(imgTag == "population"){
         ctx.fillStyle = populationColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "city"){
-        ctx.fillStyle = cityColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
+      } 
     })
   });
 
@@ -237,7 +230,7 @@ function draw() {
     onTick
     requestAnimationFrame(draw);
 
-  }, 250);
+  }, 150);
 }
 
 draw();
