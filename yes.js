@@ -230,7 +230,7 @@ function draw() {
     onTick
     requestAnimationFrame(draw);
 
-  }, 150);
+  }, 100);
 }
 
 draw();
