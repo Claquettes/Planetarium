@@ -1,8 +1,4 @@
 
-
-let populationUpdateForThisTickLIMIT = 20;
-let populationUpdateForThisTick = 0;
-
 function onTick(){
     let  = 0;
     let population = 0;
@@ -13,6 +9,12 @@ function onTick(){
     //we loop through all the population tiles
     for (let i = 0; i < canvasArray.length; i++) {
         for (let j = 0; j < canvasArray[i].length; j++) {
+            let population = 0;
+            let adjacentPopulation = 0;
+            let adjacentGrass = 0;
+            let adjacentWater = 0;
+            let adjacentMountain = 0;
+            
             if (canvasArray[i][j] == "population") {
                 population++;
                 //we check if there is a grass tile next to the population tile
@@ -76,48 +78,64 @@ function onTick(){
 }
 
 function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMountain, adjacentPopulation) {
-    //RULES FOR THE POPULATION:
-    //1) Population growth: If a population is adjacent to at least 2 squares of grass, it will grow by 1 square every turn. If it is not adjacent to at least 2 squares of grass, it will not grow.
-    //2) Population decline: If a population is adjacent to at least 2 squares of dangerous mountains, it will decrease by 1 square every turn. If it is not adjacent to at least 2 squares of dangerous mountains, it will not decrease.
-    //3) Water dependence: If a population is not adjacent to at least 1 square of water, it will decrease by 1 square every turn.
-    //4) Overpopulation: If a population is adjacent to at least 4 squares of population, it will decrease by 1 square every turn.
-//1---------------
-    if (adjacentGrass >= 2 && populationUpdateForThisTick < populationUpdateForThisTickLIMIT) { //growth of the population, we add a population tile on a grass tile next to the population tile
-        if (i > 0 && canvasArray[i-1][j] == "grass") {
-            canvasArray[i-1][j] = "population";
-            populationUpdateForThisTick++;
-        }
-        else if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "grass") {
-            canvasArray[i+1][j] = "population";
-            populationUpdateForThisTick++;
-        }
-        else if (j > 0 && canvasArray[i][j-1] == "grass") {
-            canvasArray[i][j-1] = "population";
-            populationUpdateForThisTick++;
-        }
-    }
-//2---------------
-    else if (adjacentMountain >= 2 && populationUpdateForThisTick < populationUpdateForThisTickLIMIT) { //decline of the population, we remove a population tile on a mountain tile next to the population tile
-        if (i > 0 && canvasArray[i-1][j] == "mountain") {
-            canvasArray[i-1][j] = "population";
-            populationUpdateForThisTick++;
-        }
-        else if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "mountain") {
-            canvasArray[i+1][j] = "population";
-            populationUpdateForThisTick++;
-        }
-        else if (j > 0 && canvasArray[i][j-1] == "mountain") {
-            canvasArray[i][j-1] = "population";
-            populationUpdateForThisTick++;
-        }
-    }
-//3--------------- //water dependence
-    else if (adjacentWater == 0 || populationUpdateForThisTick >= populationUpdateForThisTickLIMIT) { //decline of the population, we remove a population tile and instead we add a grass tile 
+    //There are 4 rules:
+    //1. Any live cell with fewer than 1 water tile dies (underpopulation)
+    //2. Any live cell with 2 or 3 adjacent grass tiles lives on to the next generation, and will have 1 more population tile in a random adjacent tile (survival)
+    //3. Any live cell with more than 3 adjacent population tiles dies (overpopulation)
+    //4. Any live cell with 2 or 3 adjacent population tiles lives on to the next generation (survival)
+    //5. Any live cell with 1 grass tile and 1 water tile produce a city tile
+
+
+    //we already know that the tile is a population tile, so we only need to check the rules
+    //rule 1
+    if (adjacentWater < 1) {
         canvasArray[i][j] = "grass";
-    }     
-//4---------------
-    else if (adjacentPopulation >= 3) { //decline of the population, we remove a population tile on a population tile next to the population tile
-        //we put grass instead of the population tile
-        canvasArray[i][j] = "grass";
+        return;
     }
+    //rule 2
+    if (adjacentGrass == 2 || adjacentGrass == 3) {
+        if (Math.random()<0.25){
+            if (i > 0 && canvasArray[i-1][j] == "grass") {
+                canvasArray[i-1][j] = "population";
+                return;
+            }
+            else if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "grass") {
+                canvasArray[i+1][j] = "population";
+                return;
+            }
+        } else if (Math.random()<0.5){
+            if (j > 0 && canvasArray[i][j-1] == "grass") {
+                canvasArray[i][j-1] = "population";
+                return;
+            }
+            else if (j < canvasArray[i].length - 1 && canvasArray[i][j+1] == "grass") {
+                canvasArray[i][j+1] = "population";
+                return;
+            }
+        }
+    }
+    //rule 3
+    if (adjacentPopulation > 3) {
+        canvasArray[i][j] = "grass";
+        return;
+    }
+    //rule 4
+    if (adjacentPopulation == 2 || adjacentPopulation == 3) {
+        return;
+    }
+
+
+    //rule 5
+    if (adjacentGrass == 1 && adjacentWater == 1) {
+        canvasArray[i][j] = "city";
+        return;
+    }
+
+    //if none of the rules apply, the tile stays the same
+    if (adjacentPopulation == 0)
+        canvasArray[i][j] = "population";
+    return;
+
 }
+
+   

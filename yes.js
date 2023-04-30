@@ -16,6 +16,7 @@ const mountainColor = '#a5adcb';
 const highMountainColor = '#cad3f5';
 const sandColor = '#f7e1b2';
 const populationColor = '#ed8796';
+const cityColor = '#dz8796';
 
 const tileSize = 10;
 let currentImage = 0;
@@ -220,20 +221,23 @@ function draw() {
         ctx.fillStyle = populationColor;
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
       }
+      else if(imgTag == "city"){
+        ctx.fillStyle = cityColor;
+        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+      }
     })
   });
 
   if (hover) {
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
     let rect = ctx.strokeRect(hoverX*tileSize, hoverY*tileSize, tileSize, tileSize);
-    console.log(hoverX, hoverY)
   }
   //on definit une pause de 10ms entre chaque frame
   setTimeout(() => {
     onTick
     requestAnimationFrame(draw);
 
-  }, 350);
+  }, 250);
 }
 
 draw();
