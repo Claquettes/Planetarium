@@ -228,22 +228,12 @@ function draw() {
     let rect = ctx.strokeRect(hoverX*tileSize, hoverY*tileSize, tileSize, tileSize);
     console.log(hoverX, hoverY)
   }
+  //on definit une pause de 10ms entre chaque frame
+  setTimeout(() => {
+    onTick
+    requestAnimationFrame(draw);
 
-
-  requestAnimationFrame(draw);
+  }, 350);
 }
 
-function tickCalculation() {
-  setInterval(() => {
-    setTimeout(() => {
-      onTick();
-    }, 1000);
-
-  }, 1000);
-}
-
-tickCalculation();
-
-
-
-requestAnimationFrame(draw);
+draw();

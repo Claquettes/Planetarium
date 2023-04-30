@@ -4,7 +4,6 @@ let populationUpdateForThisTickLIMIT = 20;
 let populationUpdateForThisTick = 0;
 
 function onTick(){
-    console.log("tick");
     let  = 0;
     let population = 0;
     let adjacentPopulation = 0;
@@ -81,8 +80,8 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
     //1) Population growth: If a population is adjacent to at least 2 squares of grass, it will grow by 1 square every turn. If it is not adjacent to at least 2 squares of grass, it will not grow.
     //2) Population decline: If a population is adjacent to at least 2 squares of dangerous mountains, it will decrease by 1 square every turn. If it is not adjacent to at least 2 squares of dangerous mountains, it will not decrease.
     //3) Water dependence: If a population is not adjacent to at least 1 square of water, it will decrease by 1 square every turn.
-    //4) Migration: If a population is not adjacent to at least 2 squares of grass, it will migrate to a nearby square of grass at a rate of 1 square per turn.
-//---------------
+    //4) Overpopulation: If a population is adjacent to at least 4 squares of population, it will decrease by 1 square every turn.
+//1---------------
     if (adjacentGrass >= 2 && populationUpdateForThisTick < populationUpdateForThisTickLIMIT) { //growth of the population, we add a population tile on a grass tile next to the population tile
         if (i > 0 && canvasArray[i-1][j] == "grass") {
             canvasArray[i-1][j] = "population";
@@ -96,5 +95,29 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
             canvasArray[i][j-1] = "population";
             populationUpdateForThisTick++;
         }
+    }
+//2---------------
+    else if (adjacentMountain >= 2 && populationUpdateForThisTick < populationUpdateForThisTickLIMIT) { //decline of the population, we remove a population tile on a mountain tile next to the population tile
+        if (i > 0 && canvasArray[i-1][j] == "mountain") {
+            canvasArray[i-1][j] = "population";
+            populationUpdateForThisTick++;
+        }
+        else if (i < canvasArray.length - 1 && canvasArray[i+1][j] == "mountain") {
+            canvasArray[i+1][j] = "population";
+            populationUpdateForThisTick++;
+        }
+        else if (j > 0 && canvasArray[i][j-1] == "mountain") {
+            canvasArray[i][j-1] = "population";
+            populationUpdateForThisTick++;
+        }
+    }
+//3--------------- //water dependence
+    else if (adjacentWater == 0 || populationUpdateForThisTick >= populationUpdateForThisTickLIMIT) { //decline of the population, we remove a population tile and instead we add a grass tile 
+        canvasArray[i][j] = "grass";
+    }     
+//4---------------
+    else if (adjacentPopulation >= 3) { //decline of the population, we remove a population tile on a population tile next to the population tile
+        //we put grass instead of the population tile
+        canvasArray[i][j] = "grass";
     }
 }
