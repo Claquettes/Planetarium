@@ -27,6 +27,21 @@ body{
 -moz-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
 }
 
+#addPopulation{
+  width: 4%;
+  height: 4%;
+  background-color: white;
+  font-size: x-small;
+}
+#addPopulation:hover{
+  background-color: #363a4f;
+  color: white;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+
+
 .help{
   font-size: small;
 }
