@@ -72,7 +72,6 @@ function onTick(){
                 //we call the function that will change the tile, giving it the number of adjacent grass tiles
                 changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMountain, adjacentPopulation);
             }
-        
         }
     }
 }
@@ -84,16 +83,14 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
     //3. Any live cell with more than 3 adjacent population tiles dies (overpopulation)
     //4. Any live cell with 2 or 3 adjacent population tiles lives on to the next generation (survival)
     //5. Any live cell with 1 grass tile and 1 water tile produce a city tile
-
-
     //we already know that the tile is a population tile, so we only need to check the rules
     //rule 1
-    if (adjacentWater < 1 && adjacentPopulation < 3) {
+    if (adjacentWater < 1 && adjacentPopulation < 2) {
         canvasArray[i][j] = "grass";
         return;
     }
     //rule 3
-    else if (adjacentPopulation > 3 && adjacentWater < 1) {
+    else if (adjacentPopulation > 3 && adjacentWater ) {
         canvasArray[i][j] = "grass";
         return;
     }
@@ -101,14 +98,11 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
         addPopulationOnARandomTile(i, j);
     }
 
-    if(adjacentPopulation == 2){
+    if(adjacentPopulation == 2 || adjacentPopulation == 0){
         addPopulationOnARandomTile(i, j);
     }
 
-    
-    
 }
-
 
 function addPopulationOnARandomTile(i, j){
     //we create an array with all the possible tiles where we can add a population tile

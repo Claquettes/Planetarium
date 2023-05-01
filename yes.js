@@ -28,7 +28,7 @@ let freezeTime = false;
 let isGenerating = false;
 
 let currentChoice = "population";
-let populationLeft = 5;
+let populationLeft = 10;
 
 let lastUndo = new Date();
 let lastEdits = []
@@ -182,42 +182,38 @@ function draw() {
   canvasArray.forEach((row, i) => {
     row.forEach((tile, j) => {
       let imgTag = canvasArray[i][j];
-      if (imgTag == "void") {
-        ctx.fillStyle = voidColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
+
+      switch (imgTag){
+        case "grass":
+          ctx.fillStyle = grassColor;
+          break;
+        case "water":
+          ctx.fillStyle = waterColor;
+          break;
+        case "glow":
+          ctx.fillStyle = glowColor;
+          break;
+        case "void":
+          ctx.fillStyle = voidColor;
+          break;
+        case "mountain":
+          ctx.fillStyle = mountainColor;
+          break;
+        case "highMountain":
+          ctx.fillStyle = highMountainColor;
+          break;
+        case "sand":
+          ctx.fillStyle = sandColor;
+          break;
+        case "population":
+          ctx.fillStyle = populationColor;
+          break;
+        default:
+          ctx.fillStyle = "black";
         
-      } 
-      else if(imgTag == "grass"){
-        //on prends la couleur verte
-        ctx.fillStyle = grassColor;
+        }
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      } 
-      else if(imgTag == "water"){
-        //on prends la couleur bleue
-        ctx.fillStyle = waterColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "glow"){
-        ctx.fillStyle = glowColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "mountain"){
-        ctx.fillStyle = mountainColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "highMountain"){
-        ctx.fillStyle = highMountainColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "sand"){
-        ctx.fillStyle = sandColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      }
-      else if(imgTag == "population"){
-        ctx.fillStyle = populationColor;
-        ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
-      } 
-    })
+    });
   });
 
   if (hover) {
@@ -228,9 +224,6 @@ function draw() {
 }
 
 //we call the onTick function every 150ms
-setInterval(onTick, 150);
-
-
-
+setInterval(onTick, 350);
 
 draw();
