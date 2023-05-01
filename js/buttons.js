@@ -22,23 +22,6 @@ function clearButton() {
     window.open("https://github.com/Claquettes/Planetarium");
   }
   
-  function cycleButton() {
-    if(noCycle) {
-      noCycle = false;
-    } else {
-      noCycle = true;
-    }
-    console.log(noCycle)
-  }
-  
-  function freezeTimeButton() {
-    if(freezeTime) {
-      freezeTime = false;
-    } else {
-      freezeTime = true;
-    }
-    console.log(freezeTime)
-  }
   
   function exportButton(){ //we export the canvas as a json file
     console.dir(canvasArray)
