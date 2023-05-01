@@ -1,34 +1,27 @@
 ![Language](https://img.shields.io/github/languages/count/AuttgamesTeam/Autt-Garden)
 ![Licence](https://img.shields.io/github/license/AuttgamesTeam/Autt-Garden)
-# AUTT GARDEN
-A project started in march 2023 by [@Claquettes](https://github.com/Claquettes) and [@FlashOnFire](https://github.com/FlashOnFire) from the [AuttGames Team](https://github.com/AuttgamesTeam). It's a calm and relaxing game where you can make your own tiny island/garden. The project is currently hosted on my website [claq.fr/garden](https://claq.fr/garden). Key features include:
-  - 150+ 32x32 Tiles , including plants, animals, buildings, cliffs, paths, etc.
-  - 3 different biomes WIP.
-  - Ability to save your garden as a PNG image.
-  - Ability to save your garden as a JSON file and send it to your friends.
-  - Ability to load a JSON file and import it into your garden.
-  - SoundCloud integration with a lofi playlist.
+# Planetarium
+A 0 player game where you can place 5 populations tiles on a randomly generated planet. The goal is to create a planet with a maximum of population. The population need water and grass to grow. The project started in april 2023 by [@Claquettes](https://github.com/Claquettes).
 
 ## Getting Started
-How to play:
+### How to play:
 
-- Open the game in your browser by clicking [here](https://claq.fr/garden).
-- Click on a categorie of tiles to open it.
-- Click on a tile to select it.
-- Click on another tile to place the selected tile.
-- Click on the "eraser" icon to delete a tile.
-- Click on the "Save" icon to save your garden as a PNG image.
-- Click on the "export" icon to save your garden as a JSON file.
-- Click on the "browse" button to load a JSON file and import it into your garden.
-- Click on the "bin" icon to reset your garden.
+- Open the game in your browser by clicking [here](https://claquettes.github.io/Planetarium/).
+- Click on a grass tile on the planet to place a population tile. If there is no water near the tile, the population will die.
+- Place 5 population tiles on the planet, and watch them grow.
+- The game is over when you have placed 5 population tiles, and the score is the pourcentage of the planet covered by population tiles !
 
-## Creations from the community
-- Created by Sun <div align="center"> <img src="https://i.imgur.com/o7wxb1T.png" width="400px" /> </div>
-- Created by Tibouyou <div align="center"> <img src="https://i.imgur.com/HUlL3C7.png" width="400px" /> </div>
-- Created by Claquettes <div align="center"> <img src="https://i.imgur.com/TE3LA3Z.png" width="400px" /> </div>
+### Terrain generation:
+- Randomly generated planet, with realistic water and grass distribution.
+- Sand tiles near water tiles. They can't be used to place population tile and population can't grow on them.
+- Mountain that spawn with realistic distribution. They can't be used to place population tile and population can't grow on them. 
 
-## Credits
-    - background template : https://codepen.io/chris22smith/pen/RZogMa
+### Population growth:
+- Population can only grow on grass tiles.
+- Population dies if there is no water near the tile, or at least 2 adjacent population tiles.
+- Population dies if there is 3 adjacent population and if there is no water near the tile.
+- Population will generate 2 adjacent population tiles if there is exactly 2 adjacent population tiles.
+- Else population will generate 1 adjacent population tile, in a random direction.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
