@@ -38,7 +38,7 @@ function clearInteriorPlanet() { //on efface l'intérieur du cercle
 }
   
 function placeWater() {
-    const waterThreshold = 5; // the number of adjacent tiles required to change a tile to water
+    const waterThreshold = 4; // the number of adjacent tiles required to change a tile to water
     const chanceToBecomeWater = 0.6; // the chance that a tile will become water if it meets the threshold
     // loop through each tile on the canvas
     for (let i = 0; i < canvas.width; i += tileSize) {

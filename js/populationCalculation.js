@@ -13,7 +13,6 @@ function onTick(){
             let adjacentGrass = 0;
             let adjacentWater = 0;
             let adjacentMountain = 0;
-            
             if (canvasArray[i][j] == "population") {
                 population++;
                 //we check if there is a grass tile next to the population tile
@@ -88,7 +87,7 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
         canvasArray[i][j] = "grass";
         return;
     }
-    //rule 3
+    //rule 2
     else if (adjacentPopulation > 3 && adjacentWater ) {
         canvasArray[i][j] = "grass";
         return;

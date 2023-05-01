@@ -4,19 +4,7 @@ function clearButton() {
     canvasArray = new Array(10).fill(0).map(() => new Array(10).fill("void"));
     }
   }
-  
-  function eraserButton() {
-    if(erase) { //si on est déjà en mode gomme, on désactive
-      erase = false;
-      //on remet la couleur du bouton à la normale
-      document.getElementById("eraser").style.backgroundColor = "white";
-    } else { //sinon on active le mode gomme
-      selectedImage = null;
-      erase = true;
-      document.getElementById("eraser").style.backgroundColor = "red";
-    }
-  }
-  
+    
   function saveButton() {
     setTimeout(() => {
       const dataURL = canvas.toDataURL('image/png')
@@ -31,7 +19,7 @@ function clearButton() {
   }
   
   function gitButton() {
-    window.open("https://github.com/Claquettes/garden");
+    window.open("https://github.com/Claquettes/Planetarium");
   }
   
   function cycleButton() {

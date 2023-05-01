@@ -218,4 +218,5 @@ function draw() {
 
 //we call the onTick function every 100ms
 setInterval(onTick, 100);
+
 draw();
