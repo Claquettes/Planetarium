@@ -173,9 +173,6 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //we call the function qui calcule les populations
-  onTick();
-
   ctx.filter = filterValue;
   if(noCycle) {
     ctx.filter = "brightness(100%)";
@@ -225,12 +222,13 @@ function draw() {
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
     let rect = ctx.strokeRect(hoverX*tileSize, hoverY*tileSize, tileSize, tileSize);
   }
-  //on definit une pause de 10ms entre chaque frame
-  setTimeout(() => {
-    onTick
     requestAnimationFrame(draw);
-
-  }, 100);
 }
+
+//we call the onTick function every 250ms
+setInterval(onTick, 250);
+
+
+
 
 draw();
