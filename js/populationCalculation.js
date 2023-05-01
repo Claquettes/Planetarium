@@ -1,4 +1,3 @@
-
 function onTick(){
     let  = 0;
     let population = 0;
@@ -97,11 +96,9 @@ function changeTilePopulation(i, j, adjacentGrass, adjacentWater, adjacentMounta
     else {
         addPopulationOnARandomTile(i, j);
     }
-
     if(adjacentPopulation == 2 || adjacentPopulation == 0){
         addPopulationOnARandomTile(i, j);
     }
-
 }
 
 function addPopulationOnARandomTile(i, j){

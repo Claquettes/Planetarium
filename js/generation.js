@@ -13,7 +13,7 @@ function planetOutiline(){ //on dessine le cercle, de rayon 200
         }
       }
     }
-    //on enleève les 4 coins
+    //on enlève les 4 coins
     canvasArray[30][5] = "glow";
     canvasArray[30][4] = "void";
 
@@ -27,7 +27,6 @@ function planetOutiline(){ //on dessine le cercle, de rayon 200
     canvasArray[30][56] = "void";
 }
 
-  
 function clearInteriorPlanet() { //on efface l'intérieur du cercle
     for (let i = 0; i < canvas.width; i += tileSize) {
       for (let j = 0; j < canvas.height; j += tileSize) {

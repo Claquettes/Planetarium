@@ -37,10 +37,6 @@ let hoverX = 0;
 let hoverY = 0;
 
 let categories = ["grass", "water", "glow", "void", "mountain", "highMountain", "sand"];
-
-//on génère une seed entre 0 et 40
-let seed = Math.floor(Math.random() * 40);
-
 let canvasArray = new Array(60).fill(0).map(() => new Array(60).fill("void"));
 
 let selectedImage;
@@ -100,7 +96,6 @@ function undo() {
   canvasArray[lastEdit.i][lastEdit.j] = lastEdit.prevImg;
 }
 
-
 //we import a json file in the "gardenInput" input
 fileInput.addEventListener('change', (event) => {
   const file = event.target.files[0];
@@ -119,7 +114,6 @@ fileInput.addEventListener('change', (event) => {
       let imgTag = tile.imgTag;
       let i = tile.i;
       let j = tile.j;
-
       if (imgTag == "void") {
         canvasArray[i][j] = "void";
       } else {
@@ -224,5 +218,4 @@ function draw() {
 
 //we call the onTick function every 100ms
 setInterval(onTick, 100);
-
 draw();
