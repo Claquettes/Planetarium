@@ -27,25 +27,6 @@ body{
 -moz-box-shadow: 13px 20px 36px 3px rgba(110, 115, 141,0.7);
 }
 
-#addPopulation{
-  width: 30%;
-  height: 10%;
-  background-color: white;
-  font-size: x-small;
-}
-#addPopulation:hover{
-  background-color: #363a4f;
-  color: white;
-  transition: 0.5s;
-  cursor: pointer;
-}
-
-
-
-.help{
-  font-size: small;
-}
-
 #clear{
   background-color: white;
 }
@@ -105,19 +86,6 @@ body{
   margin-top: 5px;
   font-size: large;
   font-weight: bold;
-}
-
-#image-container img {
-  border: 2px solid white;
-  margin: 3px ;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
-
-#image-container img:hover {
-  transform: scale(1.3);
-  transition: 0.4s;
 }
 
 summary{

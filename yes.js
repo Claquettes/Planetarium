@@ -27,7 +27,8 @@ let noCycle = true;
 let freezeTime = false;
 let isGenerating = false;
 
-let currentChoice = "null";
+let currentChoice = "population";
+let populationLeft = 5;
 
 let lastUndo = new Date();
 let lastEdits = []
@@ -62,9 +63,6 @@ function GeneratePlanet() {
 
 GeneratePlanet();
 
-function addPopulation(){
-  currentChoice = "population";
-}
 canvas.addEventListener("click", (event) => {
   let i = Math.floor(event.offsetX / tileSize);
   let j = Math.floor(event.offsetY / tileSize);
@@ -72,8 +70,12 @@ canvas.addEventListener("click", (event) => {
   let y = j * tileSize;
   if (erase) { //on ne pose pas d'image, on efface
     lastEdits.push({i, j, prevImg: canvasArray[i][j]})
-  } else if(selectedImage != "null") {
+  } else if(selectedImage != "null" && canvasArray[i][j] == "grass" && populationLeft > 0) {
+    populationLeft--;
     canvasArray[i][j] = currentChoice;
+  }
+  else if(populationLeft == 0) {
+    alert("Vous n'avez plus de population à placer");
   }
 });
 
@@ -225,8 +227,8 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-//we call the onTick function every 250ms
-setInterval(onTick, 250);
+//we call the onTick function every 150ms
+setInterval(onTick, 150);
 
 
 
