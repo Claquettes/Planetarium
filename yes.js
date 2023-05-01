@@ -17,7 +17,7 @@ const highMountainColor = '#cad3f5';
 const sandColor = '#f7e1b2';
 const populationColor = '#ed8796';
 
-const tileSize = 10;
+const tileSize = 15;
 let currentImage = 0;
 let hours = 0;
 let filterValue = 'brightness(100%)';
@@ -28,15 +28,13 @@ let freezeTime = false;
 let isGenerating = false;
 
 let currentChoice = "population";
-let populationLeft = 10;
+let populationLeft = 5;
 
 let lastUndo = new Date();
 let lastEdits = []
 let hover = false;
 let hoverX = 0;
 let hoverY = 0;
-
-let sizeOfCanvas = 60;
 
 let categories = ["grass", "water", "glow", "void", "mountain", "highMountain", "sand"];
 
@@ -75,7 +73,8 @@ canvas.addEventListener("click", (event) => {
     canvasArray[i][j] = currentChoice;
   }
   else if(populationLeft == 0) {
-    alert("Vous n'avez plus de population à placer");
+    let score = calculateScore();
+    alert("Vous n'avez plus de population à placer" + "\n" + "Vous avez réussi à colonsier " + score + "% de la planète!");
   }
 });
 
@@ -136,7 +135,7 @@ fileInput.addEventListener('change', (event) => {
 });
 
 //on appelle la fonction cycle tous les 1000ms  
-setInterval(cycle, 5000);
+setInterval(cycle, 1000);
 
 function cycle() {
   if (!freezeTime) {
@@ -178,11 +177,12 @@ function draw() {
   ctx.filter = filterValue;
   if(noCycle) {
     ctx.filter = "brightness(100%)";
+  }else {
+    ctx.filter = filterValue;
   }
   canvasArray.forEach((row, i) => {
     row.forEach((tile, j) => {
       let imgTag = canvasArray[i][j];
-
       switch (imgTag){
         case "grass":
           ctx.fillStyle = grassColor;
@@ -215,7 +215,6 @@ function draw() {
         ctx.fillRect(i*tileSize, j*tileSize, tileSize, tileSize);
     });
   });
-
   if (hover) {
     ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
     let rect = ctx.strokeRect(hoverX*tileSize, hoverY*tileSize, tileSize, tileSize);
@@ -223,7 +222,7 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
-//we call the onTick function every 150ms
-setInterval(onTick, 350);
+//we call the onTick function every 100ms
+setInterval(onTick, 100);
 
 draw();

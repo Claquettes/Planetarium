@@ -136,3 +136,22 @@ function addPopulationOnARandomTile(i, j){
     }
 }
    
+function calculateScore(){
+    let score = 0;
+    let numberOfTiles = 0;
+    for (let i = 0; i < canvasArray.length; i++) {
+        for (let j = 0; j < canvasArray[i].length; j++) {
+            if (canvasArray[i][j] !== "void") {
+                numberOfTiles++;
+            }
+            if (canvasArray[i][j] == "population") {
+                score++;
+            }
+        }
+    }
+    //The result is the number of population tiles divided by the total number of tiles
+    score = score / numberOfTiles * 100;
+    //we round the result to 2 decimals
+    score = Math.round(score * 100) / 100;
+    return score;
+}
